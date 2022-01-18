@@ -155,6 +155,8 @@ export default class Login extends Vue {
 
   status: boolean = false
 
+  passwordFieldType = 'password'
+
   // validation rules
   required = required
 
