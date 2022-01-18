@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { BCard, BCardText, BLink } from 'bootstrap-vue'
 
@@ -33,9 +33,7 @@ import { BCard, BCardText, BLink } from 'bootstrap-vue'
     BLink,
   },
 })
-export default class Home extends Vue {
+export default class Schedules extends Vue {
   test = 'test'
 }
 </script>
-
-<style></style>

@@ -13,7 +13,7 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/Home.vue'),
+      component: () => import('@/views/home/Home.vue'),
       meta: {
         pageTitle: 'Home',
         breadcrumb: [
@@ -25,14 +25,112 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/second-page',
-      name: 'second-page',
-      component: () => import('@/views/SecondPage.vue'),
+      path: '/practices',
+      name: 'practices',
+      component: () => import('@/views/practices/Practices.vue'),
       meta: {
-        pageTitle: 'Second Page',
+        pageTitle: 'Practices',
         breadcrumb: [
           {
-            text: 'Second Page',
+            text: 'Practices',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/companies',
+      name: 'companies',
+      component: () => import('@/views/companies/Companies.vue'),
+      meta: {
+        pageTitle: 'Companies',
+        breadcrumb: [
+          {
+            text: 'Companies',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/plans',
+      name: 'plans',
+      component: () => import('@/views/plans/Plans.vue'),
+      meta: {
+        pageTitle: 'Plans',
+        breadcrumb: [
+          {
+            text: 'Plans',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/types',
+      name: 'types',
+      component: () => import('@/views/types/Types.vue'),
+      meta: {
+        pageTitle: 'Types',
+        breadcrumb: [
+          {
+            text: 'Types',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/codes',
+      name: 'codes',
+      component: () => import('@/views/codes/Codes.vue'),
+      meta: {
+        pageTitle: 'Codes',
+        breadcrumb: [
+          {
+            text: 'Codes',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/bundles',
+      name: 'bundles',
+      component: () => import('@/views/bundles/Bundles.vue'),
+      meta: {
+        pageTitle: 'Bundles',
+        breadcrumb: [
+          {
+            text: 'Bundles',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/schedules',
+      name: 'schedules',
+      component: () => import('@/views/schedules/Schedules.vue'),
+      meta: {
+        pageTitle: 'Schedules',
+        breadcrumb: [
+          {
+            text: 'Schedules',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('@/views/settings/Settings.vue'),
+      meta: {
+        pageTitle: 'Settings',
+        breadcrumb: [
+          {
+            text: 'Settings',
             active: true,
           },
         ],

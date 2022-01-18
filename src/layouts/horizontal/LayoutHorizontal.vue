@@ -5,7 +5,7 @@
 
     <template #navbar="{ toggleVerticalMenuActive }">
       <app-navbar-horizontal-layout-brand />
-      <navbar :toggle-vertical-menu-active="toggleVerticalMenuActive" />
+      <app-navbar :toggle-vertical-menu-active="toggleVerticalMenuActive" />
     </template>
 
     <!-- <app-customizer
@@ -20,13 +20,13 @@ import LayoutHorizontal from '@core/layouts/layout-horizontal/LayoutHorizontal.v
 // import AppCustomizer from '@core/layouts/components/app-customizer/AppCustomizer.vue'
 // import { $themeConfig } from '@themeConfig'
 import AppNavbarHorizontalLayoutBrand from '@core/layouts/components/app-navbar/AppNavbarHorizontalLayoutBrand.vue'
-import Navbar from '../components/Navbar.vue'
+import AppNavbar from '../components/navbar/AppNavbar.vue'
 
 export default {
   components: {
     LayoutHorizontal,
     // AppCustomizer,
-    Navbar,
+    AppNavbar,
     AppNavbarHorizontalLayoutBrand,
   },
   data() {

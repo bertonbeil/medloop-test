@@ -311,7 +311,7 @@ export default {
 
 .customizer-section {
   padding: 1.5rem;
-    border-bottom: 1px solid #ebe9f1;
+  border-bottom: 1px solid #ebe9f1;
 
   .dark-layout & {
     border-color: $theme-dark-border-color;

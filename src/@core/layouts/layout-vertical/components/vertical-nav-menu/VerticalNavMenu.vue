@@ -9,53 +9,7 @@
     @mouseleave="updateMouseHovered(false)"
   >
     <!-- main menu header-->
-    <div class="navbar-header expanded">
-      <slot
-        name="header"
-        :toggleVerticalMenuActive="toggleVerticalMenuActive"
-        :toggleCollapsed="toggleCollapsed"
-        :collapseTogglerIcon="collapseTogglerIcon"
-      >
-        <ul class="nav navbar-nav flex-row">
-
-          <!-- Logo & Text -->
-          <li class="nav-item mr-auto">
-            <b-link
-              class="navbar-brand"
-              to="/"
-            >
-              <span class="brand-logo">
-                <b-img
-                  :src="appLogoImage"
-                  alt="logo"
-                />
-              </span>
-              <h2 class="brand-text">
-                {{ appName }}
-              </h2>
-            </b-link>
-          </li>
-
-          <!-- Toggler Button -->
-          <li class="nav-item nav-toggle">
-            <b-link class="nav-link modern-nav-toggle">
-              <feather-icon
-                icon="XIcon"
-                size="20"
-                class="d-block d-xl-none"
-                @click="toggleVerticalMenuActive"
-              />
-              <feather-icon
-                :icon="collapseTogglerIconFeather"
-                size="20"
-                class="d-none d-xl-block collapse-toggle-icon"
-                @click="toggleCollapsed"
-              />
-            </b-link>
-          </li>
-        </ul>
-      </slot>
-    </div>
+    <div class="navbar-header d-border expanded" />
     <!-- / main menu header-->
 
     <!-- Shadow -->
@@ -83,7 +37,6 @@
 <script>
 import navMenuItems from '@/navigation/vertical'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-import { BLink, BImg } from 'bootstrap-vue'
 import { provide, computed, ref } from '@vue/composition-api'
 import useAppConfig from '@core/app-config/useAppConfig'
 import { $themeConfig } from '@themeConfig'
@@ -94,8 +47,6 @@ export default {
   components: {
     VuePerfectScrollbar,
     VerticalNavMenuItems,
-    BLink,
-    BImg,
   },
   props: {
     isVerticalMenuActive: {
