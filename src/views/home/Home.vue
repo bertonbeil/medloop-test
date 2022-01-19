@@ -101,6 +101,7 @@
         class="position-relative"
         responsive
         :fields="tableColumns"
+        :items="items"
         primary-key="id"
         :sort-by.sync="sortBy"
         show-empty
@@ -109,81 +110,23 @@
       >
 
         <!-- Column: User -->
-        <template #cell(user)="data">
-          <b-media vertical-align="center">
-            <template #aside>
-              <b-avatar
-                size="32"
-                :src="data.item.avatar"
-                :text="avatarText(data.item.fullName)"
-                :variant="`light-${resolveUserRoleVariant(data.item.role)}`"
-                :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-              />
-            </template>
-            <b-link
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-              class="font-weight-bold d-block text-nowrap"
-            >
-              {{ data.item.fullName }}
-            </b-link>
-            <small class="text-muted">@{{ data.item.username }}</small>
-          </b-media>
+        <template #cell(practice)="data">
+          {{ log(data) }}
         </template>
 
         <!-- Column: Role -->
         <template #cell(role)="data">
-          <div class="text-nowrap">
-            <feather-icon
-              :icon="resolveUserRoleIcon(data.item.role)"
-              size="18"
-              class="mr-50"
-              :class="`text-${resolveUserRoleVariant(data.item.role)}`"
-            />
-            <span class="align-text-top text-capitalize">{{ data.item.role }}</span>
-          </div>
+          {{ log(data) }}
         </template>
 
         <!-- Column: Status -->
         <template #cell(status)="data">
-          <b-badge
-            pill
-            :variant="`light-${resolveUserStatusVariant(data.item.status)}`"
-            class="text-capitalize"
-          >
-            {{ data.item.status }}
-          </b-badge>
+          {{ log(data) }}
         </template>
 
         <!-- Column: Actions -->
         <template #cell(actions)="data">
-          <b-dropdown
-            variant="link"
-            no-caret
-            :right="$store.state.appConfig.isRTL"
-          >
-
-            <template #button-content>
-              <feather-icon
-                icon="MoreVerticalIcon"
-                size="16"
-                class="align-middle text-body"
-              />
-            </template>
-            <b-dropdown-item :to="{ name: 'apps-users-view', params: { id: data.item.id } }">
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item :to="{ name: 'apps-users-edit', params: { id: data.item.id } }">
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item>
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item>
-          </b-dropdown>
+          {{ log(data) }}
         </template>
 
       </b-table>
@@ -243,7 +186,6 @@ import {
   BBadge, BDropdown, BDropdownItem, BPagination,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
-import { avatarText, title } from '@core/utils/filter'
 
 @Component({
   components: {
@@ -260,7 +202,6 @@ import { avatarText, title } from '@core/utils/filter'
     BDropdown,
     BDropdownItem,
     BPagination,
-
     vSelect,
   },
 })
@@ -273,6 +214,28 @@ export default class Home extends Vue {
     { key: 'status', sortable: true },
     { key: 'actions' },
   ]
+
+  items = [
+    {
+      id: '1',
+      name: 'Family & Wellness Medicine, LLC',
+      address: '34004 16th Ave. S., Ste. 100 Federal Way, WA 98003',
+      email: 'test@test.com',
+      phone: '253-944-1223',
+      fax: '253-944-1255',
+      isActive: false,
+    },
+  ]
+
+  // eslint-disable-next-line class-methods-use-this
+  log(s) {
+    console.log(s)
+  }
+
+  created() {
+    console.log('this: ', this.$http.get('/home/data').then(res => console.log('res: ', res)))
+    // this.fetchTableData()
+  }
 
   roleOptions = [
     { label: 'Admin', value: 'admin' },
@@ -321,6 +284,10 @@ export default class Home extends Vue {
       of: this.totalUsers,
     }
   }
+
+  // fetchTableData() {
+  //   return this.$http
+  // }
 }
 </script>
 
