@@ -66,6 +66,21 @@ export default class HomeDetail extends Vue {
     fullName: 'Focus Health DPC',
     address: '2522 N Proctor St Tacoma, WA 98406 USA',
   }
+
+  created() {
+    this.fetchTableData()
+  }
+
+  async fetchTableData() {
+    const id = this.$route.params?.id
+
+    try {
+      const data = await this.$http.get<{ users: any[] }>(`/home/data?id=${id}`)
+      console.log(data)
+    } catch (err) {
+      console.log('err: ', err)
+    }
+  }
 }
 </script>
 

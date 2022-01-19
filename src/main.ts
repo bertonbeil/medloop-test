@@ -2,6 +2,8 @@ import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 
+import { Axios } from '@/plugins/axios'
+
 import router from './router'
 import store from './store'
 import App from './App.vue'
@@ -12,6 +14,10 @@ import './global-components'
 // 3rd party plugins
 import '@/libs/portal-vue'
 import '@/libs/toastification'
+
+import '@/@fake-db/db'
+
+Vue.use(Axios)
 
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
