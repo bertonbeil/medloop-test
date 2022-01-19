@@ -25,6 +25,23 @@ const router = new VueRouter({
       },
     },
     {
+      path: '/:id',
+      name: 'home-detail',
+      component: () => import('@/views/home/detailed/HomeDetail.vue'),
+      meta: {
+        pageTitle: 'Home',
+        breadcrumb: [
+          {
+            text: 'Home',
+          },
+          {
+            text: 'Detail',
+            active: true,
+          },
+        ],
+      },
+    },
+    {
       path: '/practices',
       name: 'practices',
       component: () => import('@/views/practices/Practices.vue'),

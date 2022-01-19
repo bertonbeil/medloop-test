@@ -6,6 +6,13 @@
       no-body
       class="mb-0"
     >
+      <!-- TODO MOVE TO TABLE ACTIONS -->
+      <b-link
+        :to="{ name: 'home-detail', params:{ id :'1' } }"
+        class="text-body-heading"
+      >
+        Link to Detail page
+      </b-link>
 
       <div class="m-2">
 
