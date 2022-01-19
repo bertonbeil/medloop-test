@@ -6,14 +6,6 @@
       no-body
       class="mb-0"
     >
-      <!-- TODO MOVE TO TABLE ACTIONS -->
-      <b-link
-        :to="{ name: 'home-detail', params:{ id :'1' } }"
-        class="text-body-heading"
-      >
-        Link to Detail page
-      </b-link>
-
       <div class="m-2">
 
         <!-- Table Top -->
@@ -129,7 +121,7 @@
           <p>Fax: {{ item.fax }}</p>
         </template>
 
-        <!-- Column: Actions -->
+        <!-- Column: Status -->
         <template #cell(status)="{ item }">
           <b-badge :variant="item.isActive ? 'light-success' : 'light-secondary'">
             {{ item.isActive ? 'Active' : 'Inactive' }}
@@ -137,16 +129,23 @@
         </template>
 
         <!-- Column: Actions -->
-        <template #cell(actions)>
-          <b-button
-            variant="flat-primary"
+        <template #cell(actions)="{ item }">
+          <router-link
+            #default="{ navigate }"
+            :to="{ name: 'home-detail', params:{ id: item.id } }"
+            class="text-body-heading"
           >
-            <feather-icon
-              icon="EyeIcon"
-              class="mr-50"
-            />
-            <span class="align-middle">View</span>
-          </b-button>
+            <b-button
+              variant="flat-primary"
+              @click="navigate"
+            >
+              <feather-icon
+                icon="EyeIcon"
+                class="mr-50"
+              />
+              <span class="align-middle">View</span>
+            </b-button>
+          </router-link>
         </template>
 
       </b-table>
@@ -235,57 +234,11 @@ export default class Home extends Vue {
     { key: 'actions' },
   ]
 
-  items = [
-    {
-      id: '1',
-      name: 'Family & Wellness Medicine, LLC',
-      address: '34004 16th Ave. S., Ste. 100 Federal Way, WA 98003',
-      email: 'test@test.com',
-      phone: '253-944-1223',
-      fax: '253-944-1255',
-      isActive: true,
-    },
-    {
-      id: '2',
-      name: 'Family & Wellness Medicine, LLC',
-      address: '34004 16th Ave. S., Ste. 100 Federal Way, WA 98003',
-      email: 'test@test.com',
-      phone: '253-944-1223',
-      fax: '253-944-1255',
-      isActive: false,
-    },
-  ]
-
-  // eslint-disable-next-line class-methods-use-this
-  log(s) {
-    console.log(s)
-  }
+  items = []
 
   created() {
-    console.log('this: ', this.$http.get('/home/data').then(res => console.log('res: ', res)))
-    // this.fetchTableData()
+    this.fetchTableData()
   }
-
-  roleOptions = [
-    { label: 'Admin', value: 'admin' },
-    { label: 'Author', value: 'author' },
-    { label: 'Editor', value: 'editor' },
-    { label: 'Maintainer', value: 'maintainer' },
-    { label: 'Subscriber', value: 'subscriber' },
-  ]
-
-  planOptions = [
-    { label: 'Basic', value: 'basic' },
-    { label: 'Company', value: 'company' },
-    { label: 'Enterprise', value: 'enterprise' },
-    { label: 'Team', value: 'team' },
-  ]
-
-  statusOptions = [
-    { label: 'Pending', value: 'pending' },
-    { label: 'Active', value: 'active' },
-    { label: 'Inactive', value: 'inactive' },
-  ]
 
   isAddNewUserSidebarActive = false
 
@@ -314,9 +267,15 @@ export default class Home extends Vue {
     }
   }
 
-  // fetchTableData() {
-  //   return this.$http
-  // }
+  async fetchTableData() {
+    try {
+      const data = await this.$http.get<{ users: any[] }>('/home/data')
+      this.items = data.data.users
+      this.totalUsers = this.items.length
+    } catch (err) {
+      console.log('err: ', err)
+    }
+  }
 }
 </script>
 
