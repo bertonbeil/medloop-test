@@ -110,23 +110,36 @@
       >
 
         <!-- Column: User -->
-        <template #cell(practice)="data">
-          {{ log(data) }}
-        </template>
-
-        <!-- Column: Role -->
-        <template #cell(role)="data">
-          {{ log(data) }}
+        <template #cell(practice)="{ item }">
+          <p>{{ item.name }}</p>
+          <span>ID: {{ item.id }}</span>
         </template>
 
         <!-- Column: Status -->
-        <template #cell(status)="data">
-          {{ log(data) }}
+        <template #cell(email)="{ item }">
+          <p>{{ item.email }}</p>
+          <p>Phone: {{ item.phone }}</p>
+          <p>Fax: {{ item.fax }}</p>
         </template>
 
         <!-- Column: Actions -->
-        <template #cell(actions)="data">
-          {{ log(data) }}
+        <template #cell(status)="{ item }">
+          <b-badge :variant="item.isActive ? 'light-success' : 'light-secondary'">
+            {{ item.isActive ? 'Active' : 'Inactive' }}
+          </b-badge>
+        </template>
+
+        <!-- Column: Actions -->
+        <template #cell(actions)>
+          <b-button
+            variant="flat-primary"
+          >
+            <feather-icon
+              icon="EyeIcon"
+              class="mr-50"
+            />
+            <span class="align-middle">View</span>
+          </b-button>
         </template>
 
       </b-table>
@@ -210,7 +223,7 @@ export default class Home extends Vue {
   tableColumns = [
     { key: 'practice', sortable: true },
     { key: 'address', sortable: true },
-    { key: 'contact info', sortable: true },
+    { key: 'email', label: 'contact info', sortable: false },
     { key: 'status', sortable: true },
     { key: 'actions' },
   ]
@@ -218,6 +231,15 @@ export default class Home extends Vue {
   items = [
     {
       id: '1',
+      name: 'Family & Wellness Medicine, LLC',
+      address: '34004 16th Ave. S., Ste. 100 Federal Way, WA 98003',
+      email: 'test@test.com',
+      phone: '253-944-1223',
+      fax: '253-944-1255',
+      isActive: true,
+    },
+    {
+      id: '2',
       name: 'Family & Wellness Medicine, LLC',
       address: '34004 16th Ave. S., Ste. 100 Federal Way, WA 98003',
       email: 'test@test.com',
