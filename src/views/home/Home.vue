@@ -206,6 +206,26 @@ import {
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 
+interface IUser {
+  id: string,
+  name: string,
+  avatar: string,
+  address: string,
+  address2: string,
+  city: string,
+  state: string,
+  country: string,
+  zipcode: string,
+  email: string,
+  phone: string[],
+  fax: string[],
+  isActive: boolean,
+  ehrSystem: string,
+  startDate: null,
+  endDate: null,
+  website: string,
+}
+
 @Component({
   components: {
     BCard,
@@ -234,7 +254,7 @@ export default class Home extends Vue {
     { key: 'actions' },
   ]
 
-  items = []
+  items: IUser[] = []
 
   created() {
     this.fetchTableData()
@@ -269,8 +289,8 @@ export default class Home extends Vue {
 
   async fetchTableData() {
     try {
-      const data = await this.$http.get<{ users: any[] }>('/home/data')
-      this.items = data.data.users
+      const data = await this.$http.get<{ users: IUser[] }>('/home/data')
+      this.items = data.data.users as IUser[]
       this.totalUsers = this.items.length
     } catch (err) {
       console.log('err: ', err)

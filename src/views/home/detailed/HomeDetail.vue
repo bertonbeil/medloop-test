@@ -2,44 +2,48 @@
   <div>
     <!-- Alert: No item found -->
     <!-- TODO ADD CHECKER IF NO DATA (ID) -->
-    <b-alert
-      variant="danger"
-      :show="true"
-    >
-      <h4 class="alert-heading">
-        Error fetching user data
-      </h4>
-      <div class="alert-body">
-        No user found with this user id. Check
-        <b-link
-          class="alert-link"
-          :to="{ name: 'apps-users-list'}"
+    <template v-if="!Object.keys(userData).length">
+      <b-alert
+        variant="danger"
+        :show="true"
+      >
+        <h4 class="alert-heading">
+          Error fetching user data
+        </h4>
+        <div class="alert-body">
+          No user found with this user id. Check
+          <b-link
+            class="alert-link"
+            :to="{ name: 'home'}"
+          >
+            User List
+          </b-link>
+          for other users.
+        </div>
+      </b-alert>
+    </template>
+
+    <template v-else>
+      <!-- First Row -->
+      <b-row>
+        <b-col
+          cols="12"
+          md="12"
         >
-          User List
-        </b-link>
-        for other users.
-      </div>
-    </b-alert>
+          <home-detail-user-card :user-data="userData" />
+        </b-col>
+      </b-row>
 
-    <!-- First Row -->
-    <b-row>
-      <b-col
-        cols="12"
-        md="12"
-      >
-        <home-detail-user-card :user-data="userData" />
-      </b-col>
-    </b-row>
-
-    <!-- Second Row -->
-    <b-row>
-      <b-col
-        cols="12"
-        md="12"
-      >
-        <home-detail-tabs :user-data="userData" />
-      </b-col>
-    </b-row>
+      <!-- Second Row -->
+      <b-row>
+        <b-col
+          cols="12"
+          md="12"
+        >
+          <home-detail-tabs />
+        </b-col>
+      </b-row>
+    </template>
   </div>
 </template>
 
@@ -58,14 +62,7 @@ import HomeDetailTabs from './tabs/HomeDetailTabs.vue'
   },
 })
 export default class HomeDetail extends Vue {
-  userData = {
-    id: '1',
-    userId: '35573217-44',
-    // eslint-disable-next-line global-require
-    avatar: require('@/assets/images/avatars/13-small.png'),
-    fullName: 'Focus Health DPC',
-    address: '2522 N Proctor St Tacoma, WA 98406 USA',
-  }
+  userData: any = {}
 
   created() {
     this.fetchTableData()
@@ -75,15 +72,11 @@ export default class HomeDetail extends Vue {
     const id = this.$route.params?.id
 
     try {
-      const data = await this.$http.get<{ users: any[] }>(`/home/data?id=${id}`)
-      console.log(data)
+      const { data }: any = await this.$http.get<{user: any}>(`/home/data?id=${id}`)
+      this.userData = data?.user
     } catch (err) {
       console.log('err: ', err)
     }
   }
 }
 </script>
-
-<style lang="scss">
-// @import '@core/scss/vue/libs/vue-select.scss';
-</style>

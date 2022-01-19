@@ -21,15 +21,15 @@
           <div class="d-flex flex-column mb-1">
             <div class="d-flex align-items-center">
               <h2 class="mb-0 mr-1">
-                {{ userData.fullName }}
+                {{ userData.name }}
               </h2>
-              <b-badge variant="light-success">
-                Active
+              <b-badge :variant="userData.isActive ? 'light-success' : 'light-secondary'">
+                {{ userData.isActive ? 'Active' : 'Inactive' }}
               </b-badge>
             </div>
 
             <div class="card-text">
-              Id: #{{ userData.userId }}
+              Id: #{{ userData.id }}
             </div>
           </div>
 
@@ -41,8 +41,8 @@
           </b-col>
         </div>
       </div>
-      </d>
-    </div></b-card>
+    </div>
+  </b-card>
 </template>
 
 <script lang="ts">
@@ -51,6 +51,26 @@ import {
   BCard, BButton, BAvatar, BRow, BCol, BBadge,
 } from 'bootstrap-vue'
 
+interface IUser {
+  id: string,
+  name: string,
+  avatar: string,
+  address: string,
+  address2: string,
+  city: string,
+  state: string,
+  country: string,
+  zipcode: string,
+  email: string,
+  phone: string[],
+  fax: string[],
+  isActive: boolean,
+  ehrSystem: string,
+  startDate: null,
+  endDate: null,
+  website: string,
+}
+
 @Component({
   name: 'HomeDetailUserCard',
   components: {
@@ -58,10 +78,6 @@ import {
   },
 })
 export default class HomeDetailUserCard extends Vue {
-  @Prop({ required: true }) userData: Object
+  @Prop({ required: true }) userData: IUser
 }
 </script>
-
-<style lang="scss">
-// @import '@core/scss/vue/libs/vue-select.scss';
-</style>
