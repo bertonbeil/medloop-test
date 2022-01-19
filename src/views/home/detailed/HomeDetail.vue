@@ -2,7 +2,7 @@
   <div>
     <!-- Alert: No item found -->
     <!-- TODO ADD CHECKER IF NO DATA (ID) -->
-    <template v-if="!Object.keys(userData).length">
+    <template v-if="!userData">
       <b-alert
         variant="danger"
         :show="true"
@@ -52,6 +52,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import {
   BRow, BCol, BAlert, BLink,
 } from 'bootstrap-vue'
+import { IUser } from '@/@fake-db/data/home/table-data'
 import HomeDetailUserCard from './HomeDetailUserCard.vue'
 import HomeDetailTabs from './tabs/HomeDetailTabs.vue'
 
@@ -62,7 +63,7 @@ import HomeDetailTabs from './tabs/HomeDetailTabs.vue'
   },
 })
 export default class HomeDetail extends Vue {
-  userData: any = {}
+  userData: IUser = null
 
   created() {
     this.fetchTableData()
@@ -72,7 +73,7 @@ export default class HomeDetail extends Vue {
     const id = this.$route.params?.id
 
     try {
-      const { data }: any = await this.$http.get<{user: any}>(`/home/data?id=${id}`)
+      const { data } = await this.$http.get<{user: IUser}>(`/home/data?id=${id}`)
       this.userData = data?.user
     } catch (err) {
       console.log('err: ', err)

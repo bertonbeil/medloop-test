@@ -1,7 +1,7 @@
 import mock from '@/@fake-db/mock'
 import { parseQueryString } from '../../utils'
 
-interface IUser {
+export interface IUser {
   id: string,
   name: string,
   avatar: string,

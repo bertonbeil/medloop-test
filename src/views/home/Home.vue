@@ -117,8 +117,8 @@
         <!-- Column: Status -->
         <template #cell(email)="{ item }">
           <p>{{ item.email }}</p>
-          <p>Phone: {{ item.phone }}</p>
-          <p>Fax: {{ item.fax }}</p>
+          <p>Phone: {{ item.phone[0] }}</p>
+          <p>Fax: {{ item.fax[0] }}</p>
         </template>
 
         <!-- Column: Status -->
