@@ -25,7 +25,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/:id',
+      path: '/details/:id',
       name: 'home-detail',
       component: () => import('@/views/home/detailed/HomeDetail.vue'),
       meta: {
