@@ -6,7 +6,6 @@
       no-body
       class="mb-0"
     >
-
       <div class="m-2">
 
         <!-- Table Top -->
@@ -101,6 +100,7 @@
         class="position-relative"
         responsive
         :fields="tableColumns"
+        :items="items"
         primary-key="id"
         :sort-by.sync="sortBy"
         show-empty
@@ -109,81 +109,43 @@
       >
 
         <!-- Column: User -->
-        <template #cell(user)="data">
-          <b-media vertical-align="center">
-            <template #aside>
-              <b-avatar
-                size="32"
-                :src="data.item.avatar"
-                :text="avatarText(data.item.fullName)"
-                :variant="`light-${resolveUserRoleVariant(data.item.role)}`"
-                :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-              />
-            </template>
-            <b-link
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-              class="font-weight-bold d-block text-nowrap"
-            >
-              {{ data.item.fullName }}
-            </b-link>
-            <small class="text-muted">@{{ data.item.username }}</small>
-          </b-media>
-        </template>
-
-        <!-- Column: Role -->
-        <template #cell(role)="data">
-          <div class="text-nowrap">
-            <feather-icon
-              :icon="resolveUserRoleIcon(data.item.role)"
-              size="18"
-              class="mr-50"
-              :class="`text-${resolveUserRoleVariant(data.item.role)}`"
-            />
-            <span class="align-text-top text-capitalize">{{ data.item.role }}</span>
-          </div>
+        <template #cell(practice)="{ item }">
+          <p>{{ item.name }}</p>
+          <span>ID: {{ item.id }}</span>
         </template>
 
         <!-- Column: Status -->
-        <template #cell(status)="data">
-          <b-badge
-            pill
-            :variant="`light-${resolveUserStatusVariant(data.item.status)}`"
-            class="text-capitalize"
-          >
-            {{ data.item.status }}
+        <template #cell(email)="{ item }">
+          <p>{{ item.email }}</p>
+          <p>Phone: {{ item.phone }}</p>
+          <p>Fax: {{ item.fax }}</p>
+        </template>
+
+        <!-- Column: Status -->
+        <template #cell(status)="{ item }">
+          <b-badge :variant="item.isActive ? 'light-success' : 'light-secondary'">
+            {{ item.isActive ? 'Active' : 'Inactive' }}
           </b-badge>
         </template>
 
         <!-- Column: Actions -->
-        <template #cell(actions)="data">
-          <b-dropdown
-            variant="link"
-            no-caret
-            :right="$store.state.appConfig.isRTL"
+        <template #cell(actions)="{ item }">
+          <router-link
+            #default="{ navigate }"
+            :to="{ name: 'home-detail', params:{ id: item.id } }"
+            class="text-body-heading"
           >
-
-            <template #button-content>
+            <b-button
+              variant="flat-primary"
+              @click="navigate"
+            >
               <feather-icon
-                icon="MoreVerticalIcon"
-                size="16"
-                class="align-middle text-body"
+                icon="EyeIcon"
+                class="mr-50"
               />
-            </template>
-            <b-dropdown-item :to="{ name: 'apps-users-view', params: { id: data.item.id } }">
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item :to="{ name: 'apps-users-edit', params: { id: data.item.id } }">
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item>
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item>
-          </b-dropdown>
+              <span class="align-middle">View</span>
+            </b-button>
+          </router-link>
         </template>
 
       </b-table>
@@ -243,7 +205,6 @@ import {
   BBadge, BDropdown, BDropdownItem, BPagination,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
-import { avatarText, title } from '@core/utils/filter'
 
 @Component({
   components: {
@@ -260,7 +221,6 @@ import { avatarText, title } from '@core/utils/filter'
     BDropdown,
     BDropdownItem,
     BPagination,
-
     vSelect,
   },
 })
@@ -269,31 +229,16 @@ export default class Home extends Vue {
   tableColumns = [
     { key: 'practice', sortable: true },
     { key: 'address', sortable: true },
-    { key: 'contact info', sortable: true },
+    { key: 'email', label: 'contact info', sortable: false },
     { key: 'status', sortable: true },
     { key: 'actions' },
   ]
 
-  roleOptions = [
-    { label: 'Admin', value: 'admin' },
-    { label: 'Author', value: 'author' },
-    { label: 'Editor', value: 'editor' },
-    { label: 'Maintainer', value: 'maintainer' },
-    { label: 'Subscriber', value: 'subscriber' },
-  ]
+  items = []
 
-  planOptions = [
-    { label: 'Basic', value: 'basic' },
-    { label: 'Company', value: 'company' },
-    { label: 'Enterprise', value: 'enterprise' },
-    { label: 'Team', value: 'team' },
-  ]
-
-  statusOptions = [
-    { label: 'Pending', value: 'pending' },
-    { label: 'Active', value: 'active' },
-    { label: 'Inactive', value: 'inactive' },
-  ]
+  created() {
+    this.fetchTableData()
+  }
 
   isAddNewUserSidebarActive = false
 
@@ -319,6 +264,16 @@ export default class Home extends Vue {
       from: this.perPage * (this.currentPage - 1) + (localItemsCount ? 1 : 0),
       to: this.perPage * (this.currentPage - 1) + localItemsCount,
       of: this.totalUsers,
+    }
+  }
+
+  async fetchTableData() {
+    try {
+      const data = await this.$http.get<{ users: any[] }>('/home/data')
+      this.items = data.data.users
+      this.totalUsers = this.items.length
+    } catch (err) {
+      console.log('err: ', err)
     }
   }
 }

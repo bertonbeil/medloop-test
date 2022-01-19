@@ -101,16 +101,23 @@
       />
       <span>FAQ</span>
     </b-dropdown-item>
-    <b-dropdown-item
-      link-class="d-flex align-items-center"
+    <router-link
+      #default="{ navigate }"
+      to="/login"
     >
-      <feather-icon
-        size="16"
-        icon="LogOutIcon"
-        class="mr-50"
-      />
-      <span>Logout</span>
-    </b-dropdown-item></b-nav-item-dropdown>
+      <b-dropdown-item
+        link-class="d-flex align-items-center"
+        @click="navigate"
+      >
+        <feather-icon
+          size="16"
+          icon="LogOutIcon"
+          class="mr-50"
+        />
+        <span>Logout</span>
+      </b-dropdown-item>
+    </router-link>
+  </b-nav-item-dropdown>
 </template>
 
 <script lang="ts">
