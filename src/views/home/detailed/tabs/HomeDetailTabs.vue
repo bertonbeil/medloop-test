@@ -1,32 +1,11 @@
 <template>
-  <component :is="userData === undefined ? 'div' : 'b-card'">
-
-    <!-- Alert: No item found -->
-    <b-alert
-      variant="danger"
-      :show="userData === undefined"
-    >
-      <h4 class="alert-heading">
-        Error fetching user data
-      </h4>
-      <div class="alert-body">
-        No user found with this user id. Check
-        <b-link
-          class="alert-link"
-          :to="{ name: 'apps-users-list'}"
-        >
-          User List
-        </b-link>
-        for other users.
-      </div>
-    </b-alert>
+  <b-card>
 
     <b-tabs
-      v-if="userData"
       pills
     >
 
-      <!-- Tab: Account -->
+      <!-- Tab: Practice -->
       <b-tab active>
         <template #title>
           <feather-icon
@@ -34,12 +13,12 @@
             size="16"
             class="mr-0 mr-sm-50"
           />
-          <span class="d-none d-sm-inline">Account</span>
+          <span class="d-none d-sm-inline">Practice</span>
         </template>
         <home-detail-practice-tab class="mt-2 pt-75" />
       </b-tab>
 
-      <!-- Tab: Information -->
+      <!-- Tab: Contact List -->
       <b-tab>
         <template #title>
           <feather-icon
@@ -47,12 +26,12 @@
             size="16"
             class="mr-0 mr-sm-50"
           />
-          <span class="d-none d-sm-inline">Information</span>
+          <span class="d-none d-sm-inline">Contact List</span>
         </template>
         <home-detail-practice-tab class="mt-2 pt-75" />
       </b-tab>
 
-      <!-- Tab: Social -->
+      <!-- Tab: Locations -->
       <b-tab>
         <template #title>
           <feather-icon
@@ -60,12 +39,51 @@
             size="16"
             class="mr-0 mr-sm-50"
           />
-          <span class="d-none d-sm-inline">Social</span>
+          <span class="d-none d-sm-inline">Locations</span>
+        </template>
+        <home-detail-practice-tab class="mt-2 pt-75" />
+      </b-tab>
+
+      <!-- Tab: Corporations -->
+      <b-tab>
+        <template #title>
+          <feather-icon
+            icon="Share2Icon"
+            size="16"
+            class="mr-0 mr-sm-50"
+          />
+          <span class="d-none d-sm-inline">Corporations</span>
+        </template>
+        <home-detail-practice-tab class="mt-2 pt-75" />
+      </b-tab>
+
+      <!-- Tab: Providers -->
+      <b-tab>
+        <template #title>
+          <feather-icon
+            icon="Share2Icon"
+            size="16"
+            class="mr-0 mr-sm-50"
+          />
+          <span class="d-none d-sm-inline">Providers</span>
+        </template>
+        <home-detail-practice-tab class="mt-2 pt-75" />
+      </b-tab>
+
+      <!-- Tab: Profiles -->
+      <b-tab>
+        <template #title>
+          <feather-icon
+            icon="Share2Icon"
+            size="16"
+            class="mr-0 mr-sm-50"
+          />
+          <span class="d-none d-sm-inline">Profiles</span>
         </template>
         <home-detail-practice-tab class="mt-2 pt-75" />
       </b-tab>
     </b-tabs>
-  </component>
+  </b-card>
 </template>
 
 <script lang="ts">
@@ -81,18 +99,5 @@ import HomeDetailPracticeTab from './HomeDetailPracticeTab.vue'
     BTab, BTabs, BCard, BAlert, BLink, HomeDetailPracticeTab,
   },
 })
-export default class HomeDetailTabs extends Vue {
-  userData = {
-    id: '1',
-    userId: '35573217-44',
-    // eslint-disable-next-line global-require
-    avatar: require('@/assets/images/avatars/13-small.png'),
-    fullName: 'Focus Health DPC',
-    address: '2522 N Proctor St Tacoma, WA 98406 USA',
-  }
-}
+export default class HomeDetailTabs extends Vue {}
 </script>
-
-<style lang="scss">
-// @import '@core/scss/vue/libs/vue-select.scss';
-</style>
