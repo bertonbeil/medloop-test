@@ -216,7 +216,7 @@ interface IUser {
   state: string,
   country: string,
   zipcode: string,
-  email: string,
+  email: string[],
   phone: string[],
   fax: string[],
   isActive: boolean,
