@@ -285,6 +285,24 @@
           </b-row>
         </b-col>
       </b-row>
+
+      <b-row class="d-flex justify-content-end">
+        <div class="d-flex align-items-center">
+          <div class="mr-1">
+            No changes made
+          </div>
+          <b-button
+            variant="primary"
+            disabled
+          >
+            <feather-icon
+              icon="CheckIcon"
+              class="mr-50"
+            />
+            <span class="align-middle">Save</span>
+          </b-button>
+        </div>
+      </b-row>
     </b-form>
   </div>
 </template>
