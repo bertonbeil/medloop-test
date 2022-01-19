@@ -105,18 +105,30 @@
 
           <!-- Row Fifth -->
           <b-row>
-            <b-col sm="12">
-              <!-- Field: Email -->
+            <!-- Field: Email -->
+            <b-col
+              v-for="(item, index) in userData.email"
+              :key="index"
+              sm="12"
+            >
+              <!-- Field: Phone #1 -->
               <b-form-group
-                label="Email"
-                label-for="email"
+                :label="`Email #${index + 1}`"
+                :label-for="`email${index + 1}`"
               >
                 <b-form-input
-                  id="email"
-                  v-model="userData.email"
+                  :id="`email${index + 1}`"
+                  v-model="item.email"
                 />
               </b-form-group>
             </b-col>
+
+            <span
+              class="px-1 text-primary font-weight-bold cursor-pointer"
+              @click="addItem('email')"
+            >
+              Add Phone
+            </span>
           </b-row>
         </b-col>
 
@@ -299,27 +311,8 @@ export default class HomeDetailTabs extends Vue {
   ehrSystemOptions = ['Test']
 
   addItem(type: string) {
-    if (type === 'phone') {
-      const dataLength = this.userData.phone.length
-      const item = {
-        number: '',
-        label: `Phone #${dataLength + 1}`,
-        labelFor: `phone${dataLength + 1}`,
-        id: `phone${dataLength + 1}`,
-      }
-      this.userData.phone.push(item)
-    }
-
-    if (type === 'fax') {
-      const dataLength = this.userData.fax.length
-      const item = {
-        number: '',
-        label: `Fax #${dataLength + 1}`,
-        labelFor: `fax${dataLength + 1}`,
-        id: `fax${dataLength + 1}`,
-      }
-      this.userData.fax.push(item)
-    }
+    const item = { number: '' }
+    this.userData[type].push(item)
   }
 
   created() {
@@ -333,7 +326,10 @@ export default class HomeDetailTabs extends Vue {
       const { data }: any = await this.$http.get<{user: any}>(`/home/data?id=${id}`)
       const formattedNumberdata = data?.user.phone.map(el => ({ number: el }))
       const formattedFaxData = data?.user.phone.map(el => ({ number: el }))
-      this.userData = { ...data.user, phone: formattedNumberdata, fax: formattedFaxData }
+      const formattedEmailData = data?.user.email.map(el => ({ email: el }))
+      this.userData = {
+        ...data.user, phone: formattedNumberdata, fax: formattedFaxData, email: formattedEmailData,
+      }
     } catch (err) {
       console.log('err: ', err)
     }
