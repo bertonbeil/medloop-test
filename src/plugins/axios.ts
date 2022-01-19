@@ -1,9 +1,9 @@
-import Vue from 'vue'
+import { PluginObject } from 'vue'
 
 // axios
 import axios from 'axios'
 
-const axiosIns = axios.create({
+export const axiosIns = axios.create({
   // You can add your headers here
   // ================================
   // baseURL: 'https://some-domain.com/api/',
@@ -11,6 +11,11 @@ const axiosIns = axios.create({
   // headers: {'X-Custom-Header': 'foobar'}
 })
 
-Vue.prototype.$http = axiosIns
-
 export default axiosIns
+
+export const Axios: PluginObject<any> = {
+  install(Vue) {
+    // eslint-disable-next-line no-param-reassign
+    Vue.prototype.$http = axiosIns
+  },
+}

@@ -69,17 +69,6 @@
     </transition>
     <!--/ Content -->
 
-    <!-- Footer -->
-    <footer
-      class="footer footer-light"
-      :class="[footerTypeClass]"
-    >
-      <slot name="footer">
-        <app-footer />
-      </slot>
-    </footer>
-    <!-- /Footer -->
-
     <slot name="customizer" />
   </div>
 </template>

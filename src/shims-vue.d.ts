@@ -3,3 +3,6 @@ declare module '*.vue' {
 
   export default Vue
 }
+
+declare module '@validations'
+declare module 'vue-select'
